@@ -3,6 +3,7 @@ venv/
 *.pyc
 __pycache__/
 .env
+.flaskenv
 instance/
 .vscode/
 .DS_Store
