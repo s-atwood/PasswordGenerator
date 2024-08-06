@@ -1,7 +1,7 @@
 import json
 from pathlib import Path
 
-FILE_PATH = Path('english_corpus2.json')
+FILE_PATH = Path('english_corpus.json')
 
 
 def load_words_from_json(file_path):
@@ -14,4 +14,3 @@ def load_words_from_json(file_path):
         return list()
 
 words = load_words_from_json(FILE_PATH)
-print(type(words))
