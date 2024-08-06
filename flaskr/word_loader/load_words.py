@@ -12,5 +12,3 @@ def load_words_from_json(file_path):
     except FileNotFoundError:
         print(f"File '{FILE_PATH}' not found.")
         return list()
-
-words = load_words_from_json(FILE_PATH)

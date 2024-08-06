@@ -1,6 +1,15 @@
+from flask import Flask, jsonify
+from dotenv import load_dotenv
+from pathlib import Path
+from .passphrase.generate_passphrase import generate_passphrase
+from .random_api.random_indices import get_random_indices
+from .word_loader.load_words import load_words_from_json
 import os
 
-from flask import Flask
+load_dotenv()
+API_KEY = os.getenv("API_KEY")
+FILE_PATH = Path('english_corpus.json')
+
 
 def create_app(test_config=None):
     app = Flask(__name__, instance_relative_config=True)
@@ -22,9 +31,12 @@ def create_app(test_config=None):
     except OSError:
         pass
 
-    @app.route('/')
+    @app.route('/', methods=['GET'])
     def home():
-        return ''
+        words = load_words_from_json(FILE_PATH)
+        random_indices = get_random_indices(API_KEY, 5, 0, len(words)-1)
+        passphrase = generate_passphrase(words, random_indices)
+        return jsonify({'passphrase': passphrase})
     
     return app
     
