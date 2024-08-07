@@ -1,6 +1,5 @@
 from flask import Flask, jsonify
 from flask_cors import CORS
-from flask_caching import Cache
 from dotenv import load_dotenv
 from pathlib import Path
 from .passphrase.generate_passphrase import generate_passphrase
@@ -14,13 +13,10 @@ FILE_PATH = Path('english_corpus.json')
 
 
 def create_app(test_config=None):
-    cache = Cache(config={'CACHE_TYPE': 'simple'})
     app = Flask(__name__, instance_relative_config=True)
-    cache.init_app(app)
     CORS(app)
     app.config.from_mapping(
         SECRET_KEY='dev',
-        CACHE_DEFAULT_TIMEOUT = 60 * 15,
         DATABASE=os.path.join(app.instance_path,'flaskr.sqlite'),
     )
 
@@ -38,7 +34,6 @@ def create_app(test_config=None):
         pass
 
     @app.route('/', methods=['GET'])
-    @cache.cached(timeout=1)
     def home():
         words = load_words_from_json(FILE_PATH)
         random_indices = get_random_indices(API_KEY, 5, 0, len(words)-1)
