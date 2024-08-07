@@ -44,9 +44,6 @@ def create_app(test_config=None):
         random_indices = get_random_indices(API_KEY, 5, 0, len(words)-1)
         passphrase = generate_passphrase(words, random_indices)
         return jsonify({'Your passphrase': passphrase})
-        # x = {"members": ["member1", "member2"]}
-        # y = {"something", "somethingelse"}
-        # return jsonify(x)
     
     return app
     
